@@ -1,0 +1,26 @@
+name: Build and Run Docker container
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build_and_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Create large file
+        run: dd if=/dev/urandom of=data/large_file.bin bs=1M count=1500
+
+      - name: Upload large file as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: large-file
+          path: data/large_file.bin
