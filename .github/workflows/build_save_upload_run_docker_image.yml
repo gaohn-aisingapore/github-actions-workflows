@@ -1,4 +1,4 @@
-name: Build and Run Docker container
+name: Build, Save, Upload and Run Docker Image
 on:
   push:
     branches:
@@ -24,11 +24,21 @@ jobs:
           .
       working-directory: ${{ github.workspace }}
 
+    - name: Save Docker image
+      run: |
+        mkdir -p docker-image
+        docker save toy-example-image:latest | gzip > docker-image/toy-example-image.tar.gz
+
+    - name: Upload Docker image as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: toy-example-image
+        path: docker-image/toy-example-image.tar.gz
+
     - name: Run Docker container
       run: |
         docker run \
           --rm \
-          -p 5000:5000 \
           --name toy-example-container \
           toy-example-image
 
