@@ -18,8 +18,8 @@ jobs:
     - name: Build Docker image
       run: |
         docker build \
-          -f engr/Dockerfile \
-          -t pyspark-image \
+          -f Dockerfile \
+          -t toy-example-image \
           --platform linux/amd64 \
           .
       working-directory: ${{ github.workspace }}
@@ -28,7 +28,7 @@ jobs:
       run: |
         docker run \
           --rm \
-          -p 4040:4040 \
-          --name pyspark-container \
-          pyspark-image \
+          -p 5000:5000 \
+          --name toy-example-container \
+          toy-example-image
 
