@@ -17,7 +17,7 @@ jobs:
         run: mkdir -p data
 
       - name: Create large file
-        run: dd if=/dev/urandom of=data/large_file.bin bs=1M count=1500
+        run: dd if=/dev/urandom of=data/large_file.bin bs=1M count=3500
 
       - name: Upload large file as artifact
         uses: actions/upload-artifact@v2
